@@ -6,16 +6,16 @@
     <title>Saved Boards</title>
     <style>
         * { box-sizing: border-box; }
-        body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f6f7f9; color: #172033; }
+        body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f3f5f8; color: #172033; }
         .page { max-width: 1040px; margin: 0 auto; padding: 28px; }
         .header { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; margin-bottom: 22px; }
         h1 { margin: 0 0 6px; font-size: 2rem; line-height: 1.1; }
         .muted { color: #667085; margin: 0; }
-        .panel, .board-card { background: #fff; border: 1px solid #d9dee8; border-radius: 8px; box-shadow: 0 8px 22px rgba(20, 31, 51, .06); }
+        .panel, .board-card { background: #fff; border: 1px solid #d9dee8; border-radius: 8px; box-shadow: 0 6px 18px rgba(20, 31, 51, .05); }
         .panel { padding: 16px; margin-bottom: 18px; }
         .create-form, .rename-form { display: flex; gap: 10px; align-items: center; }
         input { width: 100%; min-width: 0; padding: 10px 12px; border: 1px solid #b8c0cc; border-radius: 6px; font: inherit; }
-        button, .button { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 9px 14px; border: 1px solid #9aa4b2; border-radius: 6px; background: #fff; color: #172033; font: inherit; text-decoration: none; cursor: pointer; white-space: nowrap; }
+        button, .button { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 9px 14px; border: 1px solid #9aa4b2; border-radius: 6px; background: #fff; color: #172033; font: inherit; text-decoration: none; cursor: pointer; white-space: nowrap; transition: background .16s ease, border-color .16s ease, color .16s ease; }
         button:hover, .button:hover { background: #f3f5f8; }
         .primary { background: #1f6feb; color: #fff; border-color: #1f6feb; }
         .primary:hover { background: #1a5fc9; }
@@ -25,10 +25,14 @@
         .errors { margin: 0 0 16px; padding: 10px 12px; border-radius: 6px; background: #fff1f0; color: #b42318; }
         .board-list { display: grid; gap: 12px; }
         .board-card { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; padding: 16px; }
+        .board-card:hover { border-color: #c2cad6; }
         .board-title { color: #175cd3; font-weight: 700; text-decoration: none; }
         .board-title:hover { text-decoration: underline; }
         .actions { display: flex; align-items: center; gap: 8px; }
         .delete-form { margin: 0; }
+        .rename-panel { display: none; grid-column: 1 / -1; padding-top: 12px; border-top: 1px solid #eef1f5; }
+        .board-card.is-renaming .rename-panel { display: block; }
+        .board-card.is-renaming .summary-actions { display: none; }
         @media (max-width: 720px) {
             .header, .board-card, .create-form, .rename-form, .actions { display: grid; grid-template-columns: 1fr; }
             .actions { width: 100%; }
@@ -78,18 +82,23 @@
                         <a href="{{ route('boards.show', $board) }}" class="board-title">{{ $board->name }}</a>
                         <p class="muted">Updated {{ $board->updated_at->diffForHumans() }}</p>
                     </div>
-                    <div class="actions">
+                    <div class="actions summary-actions">
+                        <a href="{{ route('boards.show', $board) }}" class="button">Open</a>
+                        <button type="button" data-rename-toggle>Rename</button>
+                        <form method="POST" action="{{ route('boards.destroy', $board) }}" class="delete-form" onsubmit="return confirm('Delete this board?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="danger">Delete</button>
+                        </form>
+                    </div>
+                    <div class="rename-panel">
                         <form method="POST" action="{{ route('boards.update', $board) }}" class="rename-form">
                             @csrf
                             @method('PUT')
                             <input name="name" type="text" value="{{ $board->name }}" aria-label="Rename {{ $board->name }}" required>
                             <input name="canvas_data" type="hidden" value="{{ $board->canvas_data }}">
-                            <button type="submit">Rename</button>
-                        </form>
-                        <form method="POST" action="{{ route('boards.destroy', $board) }}" class="delete-form" onsubmit="return confirm('Delete this board?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="danger">Delete</button>
+                            <button type="submit" class="primary">Save name</button>
+                            <button type="button" data-rename-cancel>Cancel</button>
                         </form>
                     </div>
                 </article>
@@ -97,5 +106,20 @@
         </section>
     @endif
 </main>
+<script>
+    document.querySelectorAll('[data-rename-toggle]').forEach((button) => {
+        button.addEventListener('click', () => {
+            const card = button.closest('.board-card');
+            card.classList.add('is-renaming');
+            card.querySelector('.rename-panel input[name="name"]').focus();
+        });
+    });
+
+    document.querySelectorAll('[data-rename-cancel]').forEach((button) => {
+        button.addEventListener('click', () => {
+            button.closest('.board-card').classList.remove('is-renaming');
+        });
+    });
+</script>
 </body>
 </html>

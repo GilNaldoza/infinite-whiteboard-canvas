@@ -8,27 +8,39 @@
     <script src="https://unpkg.com/konva@9/konva.min.js"></script>
     <style>
         * { box-sizing: border-box; }
-        html, body { margin: 0; height: 100%; overflow: hidden; background: #eef1f5; color: #172033; }
+        html, body { margin: 0; height: 100%; overflow: hidden; background: #eceff3; color: #172033; }
         body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
         #container { width: 100vw; height: 100vh; }
-        .toolbar {
+        .topbar {
             position: fixed;
             top: 12px;
             left: 12px;
             right: 12px;
             z-index: 10;
-            display: flex;
+            display: grid;
+            grid-template-columns: minmax(180px, 320px) 1fr auto;
             align-items: center;
             gap: 8px;
-            flex-wrap: wrap;
             padding: 10px;
             background: rgba(255,255,255,.96);
             border: 1px solid #d9dee8;
             border-radius: 8px;
-            box-shadow: 0 10px 26px rgba(20,31,51,.12);
+            box-shadow: 0 8px 22px rgba(20,31,51,.1);
         }
-        .toolbar input[type="text"] { width: min(260px, 100%); }
-        .toolbar input, .toolbar select, .toolbar button, .toolbar a {
+        .tool-rail {
+            position: fixed;
+            left: 12px;
+            top: 76px;
+            z-index: 10;
+            display: grid;
+            gap: 6px;
+            padding: 8px;
+            background: rgba(255,255,255,.96);
+            border: 1px solid #d9dee8;
+            border-radius: 8px;
+            box-shadow: 0 8px 22px rgba(20,31,51,.1);
+        }
+        .topbar input, .topbar select, .topbar button, .topbar a, .tool-rail button {
             min-height: 36px;
             border: 1px solid #aab3c2;
             border-radius: 6px;
@@ -36,9 +48,9 @@
             color: #172033;
             font: inherit;
         }
-        .toolbar input[type="text"], .toolbar select { padding: 7px 10px; }
-        .toolbar input[type="color"] { width: 44px; padding: 3px; }
-        .toolbar button, .toolbar a {
+        .topbar input[type="text"], .topbar select { padding: 7px 10px; }
+        .topbar input[type="color"] { width: 44px; padding: 3px; }
+        .topbar button, .topbar a, .tool-rail button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -46,42 +58,83 @@
             text-decoration: none;
             cursor: pointer;
             white-space: nowrap;
+            transition: background .16s ease, border-color .16s ease, color .16s ease, transform .16s ease;
         }
-        .toolbar button:hover, .toolbar a:hover { background: #f3f5f8; }
-        .toolbar button.active { background: #1f6feb; color: #fff; border-color: #1f6feb; }
-        .toolbar .save { background: #16703c; color: #fff; border-color: #16703c; }
-        .toolbar .group { display: inline-flex; gap: 6px; align-items: center; }
-        #zoomLabel { min-width: 52px; text-align: center; color: #475467; }
-        #status { min-width: 120px; color: #475467; }
+        .tool-rail button {
+            width: 108px;
+            justify-content: flex-start;
+        }
+        .topbar button:hover, .topbar a:hover, .tool-rail button:hover { background: #f3f5f8; }
+        .tool-rail button.active {
+            background: #1f6feb;
+            color: #fff;
+            border-color: #1f6feb;
+            box-shadow: inset 3px 0 0 rgba(255,255,255,.45);
+        }
+        .topbar .save { background: #16703c; color: #fff; border-color: #16703c; }
+        .topbar .save:hover { background: #126132; }
+        .topbar .save:disabled { cursor: progress; opacity: .72; }
+        .topbar .group { display: inline-flex; gap: 6px; align-items: center; justify-content: flex-end; }
+        .board-field { width: 100%; min-width: 0; }
+        .style-group { justify-self: center; }
+        .status-group { justify-self: end; }
+        #zoomLabel, #status {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 30px;
+            border-radius: 999px;
+            padding: 4px 10px;
+            background: #f2f4f7;
+            color: #475467;
+            font-size: .9rem;
+            white-space: nowrap;
+        }
+        #status[data-state="dirty"] { background: #fff7e6; color: #9a5b00; }
+        #status[data-state="saving"] { background: #eaf2ff; color: #175cd3; }
+        #status[data-state="saved"] { background: #e9f7ef; color: #16703c; }
+        #status[data-state="error"] { background: #fff1f0; color: #b42318; }
         @media (max-width: 760px) {
-            .toolbar { align-items: stretch; }
-            .toolbar input[type="text"] { width: 100%; }
+            .topbar { grid-template-columns: 1fr; align-items: stretch; }
+            .topbar .group { justify-content: flex-start; overflow-x: auto; }
+            .tool-rail {
+                top: auto;
+                right: 12px;
+                bottom: 12px;
+                display: flex;
+                overflow-x: auto;
+            }
+            .tool-rail button { width: auto; }
         }
     </style>
 </head>
 <body>
-<div class="toolbar">
-    <input id="boardName" type="text" placeholder="Board name" value="{{ $board?->name ?? $defaultName ?? 'Untitled board' }}">
-    <div class="group" aria-label="Drawing tools">
-        <button type="button" data-tool="select" class="active">Select</button>
-        <button type="button" data-tool="freehand">Freehand</button>
-        <button type="button" data-tool="rect">Rectangle</button>
-        <button type="button" data-tool="circle">Circle</button>
-        <button type="button" data-tool="line">Line</button>
-        <button type="button" data-tool="arrow">Arrow</button>
-        <button type="button" data-tool="text">Text</button>
+<div class="topbar">
+    <input id="boardName" class="board-field" type="text" placeholder="Board name" value="{{ $board?->name ?? $defaultName ?? 'Untitled board' }}">
+    <div class="group style-group">
+        <input id="colorPicker" type="color" value="#1f6feb" aria-label="Color" title="Drawing color">
+        <select id="strokeWidth" aria-label="Stroke width" title="Stroke width">
+            <option value="2">Thin</option>
+            <option value="4" selected>Medium</option>
+            <option value="8">Thick</option>
+        </select>
+        <button type="button" id="resetView" title="Reset pan and zoom">Reset view</button>
+        <span id="zoomLabel">100%</span>
     </div>
-    <input id="colorPicker" type="color" value="#1f6feb" aria-label="Color">
-    <select id="strokeWidth" aria-label="Stroke width">
-        <option value="2">Thin</option>
-        <option value="4" selected>Medium</option>
-        <option value="8">Thick</option>
-    </select>
-    <button type="button" id="resetView">Reset view</button>
-    <span id="zoomLabel">100%</span>
-    <button type="button" id="saveBoard" class="save">Save</button>
-    <a href="{{ route('boards.index') }}">Boards</a>
-    <span id="status"></span>
+    <div class="group status-group">
+        <span id="status" data-state="saved">Ready</span>
+        <button type="button" id="saveBoard" class="save">Save</button>
+        <a href="{{ route('boards.index') }}">Boards</a>
+    </div>
+</div>
+<div class="tool-rail" aria-label="Drawing tools">
+    <button type="button" data-tool="select" class="active" title="Select and move shapes">Select</button>
+    <button type="button" data-tool="freehand" title="Draw freehand strokes">Freehand</button>
+    <button type="button" data-tool="rect" title="Draw rectangles">Rectangle</button>
+    <button type="button" data-tool="circle" title="Draw circles and ellipses">Circle</button>
+    <button type="button" data-tool="line" title="Draw straight lines">Line</button>
+    <button type="button" data-tool="arrow" title="Draw arrows">Arrow</button>
+    <button type="button" data-tool="text" title="Place editable text">Text</button>
 </div>
 <div id="container"></div>
 
@@ -96,6 +149,7 @@
     const colorPicker = document.getElementById('colorPicker');
     const strokeWidth = document.getElementById('strokeWidth');
     const toolButtons = document.querySelectorAll('[data-tool]');
+    const saveButton = document.getElementById('saveBoard');
 
     let activeTool = 'select';
     let isDrawing = false;
@@ -103,11 +157,12 @@
     let startPoint = null;
     let currentShape = null;
     let dirty = false;
+    let saving = false;
     let textEditor = null;
 
-    function setStatus(message, ok = true) {
+    function setStatus(message, state = 'saved') {
         statusLabel.textContent = message;
-        statusLabel.style.color = ok ? '#16703c' : '#b42318';
+        statusLabel.dataset.state = state;
     }
 
     function makeStage() {
@@ -132,7 +187,7 @@
         } catch (error) {
             console.error(error);
             stage = makeStage();
-            setStatus('Could not load board data.', false);
+            setStatus('Could not load board data.', 'error');
         }
     }
 
@@ -180,13 +235,16 @@
 
     function markDirty() {
         dirty = true;
+        if (!saving) {
+            setStatus('Unsaved', 'dirty');
+        }
     }
 
     function setTool(tool) {
         activeTool = tool;
         transformer.nodes([]);
         toolButtons.forEach((button) => button.classList.toggle('active', button.dataset.tool === tool));
-        stage.container().style.cursor = tool === 'select' ? 'default' : 'crosshair';
+        updateCursor();
         layer.draw();
     }
 
@@ -225,6 +283,18 @@
             transformer.nodes([node]);
         }
         layer.draw();
+    }
+
+    function updateCursor(cursor = null) {
+        if (cursor) {
+            stage.container().style.cursor = cursor;
+            return;
+        }
+        if (activeTool === 'select') {
+            stage.container().style.cursor = 'grab';
+            return;
+        }
+        stage.container().style.cursor = activeTool === 'text' ? 'text' : 'crosshair';
     }
 
     function enableShape(node) {
@@ -296,6 +366,7 @@
             if (isBackground(event.target)) {
                 selectNode(null);
                 isPanning = true;
+                updateCursor('grabbing');
                 stage.draggable(true);
                 stage.startDrag();
             }
@@ -436,6 +507,7 @@
         if (isPanning) {
             isPanning = false;
             stage.draggable(false);
+            updateCursor();
             return;
         }
 
@@ -479,7 +551,7 @@
 
     boardName.addEventListener('input', markDirty);
     document.getElementById('resetView').addEventListener('click', resetView);
-    document.getElementById('saveBoard').addEventListener('click', () => saveBoard(false));
+    saveButton.addEventListener('click', () => saveBoard(false));
 
     function transparentFill(hex) {
         const value = hex.replace('#', '');
@@ -514,11 +586,17 @@
     async function saveBoard(auto = false) {
         const name = boardName.value.trim();
         if (!name) {
-            setStatus('Board name is required.', false);
+            setStatus('Board name is required.', 'error');
             return;
         }
 
-        setStatus(auto ? 'Auto-saving...' : 'Saving...');
+        if (saving) {
+            return;
+        }
+
+        saving = true;
+        saveButton.disabled = true;
+        setStatus(auto ? 'Auto-saving...' : 'Saving...', 'saving');
         const payload = {
             name,
             canvas_data: stageJson(),
@@ -543,13 +621,16 @@
 
             boardId = data.id || boardId;
             dirty = false;
-            setStatus(auto ? 'Auto-saved.' : 'Saved.');
+            setStatus(auto ? 'Auto-saved' : 'Saved', 'saved');
             if (boardId && !window.location.pathname.endsWith(`/boards/${boardId}`)) {
                 window.history.replaceState({}, '', `/boards/${boardId}`);
             }
         } catch (error) {
             console.error(error);
-            setStatus(error.message || 'Save failed.', false);
+            setStatus(error.message || 'Save failed', 'error');
+        } finally {
+            saving = false;
+            saveButton.disabled = false;
         }
     }
 
