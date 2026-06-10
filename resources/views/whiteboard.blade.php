@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/konva@9/konva.min.js"></script>
     <style>
-        /* ── Reset & base ── */
+        /* â”€â”€ Reset & base â”€â”€ */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
@@ -52,7 +52,7 @@
 
         #container { position: relative; z-index: 1; width: 100vw; height: 100vh; }
 
-        /* ── Glassmorphism card ── */
+        /* â”€â”€ Glassmorphism card â”€â”€ */
         .glass {
             background: var(--glass);
             border: 1px solid var(--glass-border);
@@ -62,7 +62,7 @@
             -webkit-backdrop-filter: blur(18px) saturate(1.6);
         }
 
-        /* ── Panel entrance animation ── */
+        /* â”€â”€ Panel entrance animation â”€â”€ */
         .glass { animation: panelIn .3s cubic-bezier(.34,1.4,.64,1) both; }
         .tool-rail  { animation-delay: .06s; }
         .util-panel { animation-delay: .1s; }
@@ -71,9 +71,9 @@
             to   { opacity:1; transform: translateY(0) scale(1); }
         }
 
-        /* ═══════════════════════════════
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
            TOP BAR
-        ═══════════════════════════════ */
+        â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         .topbar {
             position: fixed; top: 12px; left: 12px; right: 12px; z-index: 100;
             display: grid;
@@ -137,7 +137,7 @@
         .color-wheel input[type="color"] {
             position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
         }
-        #colorPicker { display: none; }   /* real picker hidden; triggered by color-wheel */
+        /* NOTE: colorPicker is the input inside .color-wheel â€“ do NOT set display:none */
 
         /* Stroke-width segmented control */
         .stroke-group { display: flex; gap: 2px; }
@@ -174,9 +174,8 @@
         .pill.on     { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
         .pill svg    { flex-shrink: 0; }
 
-        /* Eraser size select (visible only when eraser is active) */
-        #eraserSizePill {
-            display: none;
+        /* Eraser size select â€” shown only when eraser tool is active */
+        #eraserSize {
             height: 30px; padding: 0 10px;
             border: 1.5px solid var(--danger);
             border-radius: var(--r-xs);
@@ -184,8 +183,9 @@
             color: var(--danger);
             font: 500 12px 'Inter', sans-serif;
             cursor: pointer; outline: none;
+            display: none;
         }
-        #eraserSizePill option { background: #fff; color: var(--text); }
+        #eraserSize option { background: #fff; color: var(--text); }
 
         /* Zoom badge */
         #zoomLabel {
@@ -241,9 +241,9 @@
         /* Status group */
         .status-group { display: flex; align-items: center; gap: 7px; justify-content: flex-end; }
 
-        /* ═══════════════════════════════
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
            TOOL RAIL (left sidebar)
-        ═══════════════════════════════ */
+        â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         .tool-rail {
             position: fixed; left: 12px; top: 74px; z-index: 100;
             display: flex; flex-direction: column; gap: 3px;
@@ -294,9 +294,9 @@
         }
         .tool-btn:hover::after { opacity: 1; }
 
-        /* ═══════════════════════════════
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
            UTILITY PANEL (right sidebar)
-        ═══════════════════════════════ */
+        â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         .util-panel {
             position: fixed; right: 12px; top: 74px; z-index: 100;
             display: flex; flex-direction: column; gap: 8px;
@@ -348,9 +348,9 @@
             background: var(--accent-dim); border-color: var(--accent); color: var(--accent);
         }
 
-        /* ═══════════════════════════════
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
            ERASER CURSOR BUBBLE
-        ═══════════════════════════════ */
+        â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         .cursor-eraser { cursor: none !important; }
         #eraserCursor {
             position: fixed; pointer-events: none; z-index: 999;
@@ -362,9 +362,9 @@
             transition: width .1s ease, height .1s ease;
         }
 
-        /* ═══════════════════════════════
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
            RESPONSIVE
-        ═══════════════════════════════ */
+        â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         @media (max-width: 760px) {
             .topbar {
                 grid-template-columns: 1fr;
@@ -389,7 +389,7 @@
 </head>
 <body>
 
-<!-- ══════════════ TOP BAR ══════════════ -->
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â• TOP BAR â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <div class="topbar glass">
 
     {{-- Board name --}}
@@ -482,7 +482,7 @@
     </div>
 </div>
 
-<!-- ══════════════ TOOL RAIL ══════════════ -->
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â• TOOL RAIL â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <div class="tool-rail glass" aria-label="Drawing tools">
 
     <button class="tool-btn active" data-tool="select" data-tip="Select  (V)">
@@ -526,7 +526,7 @@
     </button>
 </div>
 
-<!-- ══════════════ UTILITY PANEL ══════════════ -->
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â• UTILITY PANEL â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <div class="util-panel glass" aria-label="Canvas utilities">
 
     <div class="util-section">
@@ -556,12 +556,12 @@
             </button>
         </div>
         <div class="util-row">
-            <button class="util-btn" id="bringForwardButton" title="Bring forward" disabled>↑ Fwd</button>
-            <button class="util-btn" id="sendBackwardButton" title="Send backward" disabled>↓ Back</button>
+            <button class="util-btn" id="bringForwardButton" title="Bring forward" disabled>â†‘ Fwd</button>
+            <button class="util-btn" id="sendBackwardButton" title="Send backward" disabled>â†“ Back</button>
         </div>
         <div class="util-row">
-            <button class="util-btn" id="bringFrontButton" title="Bring to front" disabled>⤒ Front</button>
-            <button class="util-btn" id="sendBackButton" title="Send to back" disabled>⤓ Back</button>
+            <button class="util-btn" id="bringFrontButton" title="Bring to front" disabled>â¤’ Front</button>
+            <button class="util-btn" id="sendBackButton" title="Send to back" disabled>â¤“ Back</button>
         </div>
         <div class="util-row">
             <button class="util-btn" id="fillToggle">
@@ -600,907 +600,960 @@
 <div id="container"></div>
 
 <script>
-    /* ════════════════════════════════════════════════
-       CONSTANTS & DOM REFS
-    ════════════════════════════════════════════════ */
-    const savedData    = @json($board?->canvas_data ?? null);
-    let   boardId      = @json($board?->id ?? null);
-    const apiBase      = '/api/boards';
-    const csrfToken    = document.querySelector('meta[name="csrf-token"]').content;
+'use strict';
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   CONSTANTS & DOM
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+const savedData    = @json($board?->canvas_data ?? null);
+let   boardId      = @json($board?->id ?? null);
+const API          = '/api/boards';
+const CSRF         = document.querySelector('meta[name="csrf-token"]').content;
 
-    const boardName        = document.getElementById('boardName');
-    const statusLabel      = document.getElementById('status');
-    const zoomLabel        = document.getElementById('zoomLabel');
-    const colorPicker      = document.getElementById('colorPicker');
-    const strokeWidth      = document.getElementById('strokeWidth');
-    const toolButtons      = document.querySelectorAll('[data-tool]');
-    const saveButton       = document.getElementById('saveBoard');
-    const undoButton       = document.getElementById('undoButton');
-    const redoButton       = document.getElementById('redoButton');
-    const duplicateButton  = document.getElementById('duplicateButton');
-    const exportButton     = document.getElementById('exportButton');
-    const bringForwardButton  = document.getElementById('bringForwardButton');
-    const sendBackwardButton  = document.getElementById('sendBackwardButton');
-    const bringFrontButton    = document.getElementById('bringFrontButton');
-    const sendBackButton      = document.getElementById('sendBackButton');
-    const fillToggle       = document.getElementById('fillToggle');
-    const fitViewButton    = document.getElementById('fitView');
-    const gridToggle       = document.getElementById('gridToggle');
-    const snapToggle       = document.getElementById('snapToggle');
-    const gridLabel        = document.getElementById('gridLabel');
-    const snapLabel        = document.getElementById('snapLabel');
-    const eraserSizeSelect = document.getElementById('eraserSize');
-    const eraserCursor     = document.getElementById('eraserCursor');
+const elBoardName   = document.getElementById('boardName');
+const elStatus      = document.getElementById('status');
+const elZoom        = document.getElementById('zoomLabel');
+const elColorPicker = document.getElementById('colorPicker');
+const elStrokeWidth = document.getElementById('strokeWidth');   // hidden <select>
+const elEraserSize  = document.getElementById('eraserSize');
+const elEraserCursor= document.getElementById('eraserCursor');
+const elSaveBtn     = document.getElementById('saveBoard');
+const elUndoBtn     = document.getElementById('undoButton');
+const elRedoBtn     = document.getElementById('redoButton');
+const elDupeBtn     = document.getElementById('duplicateButton');
+const elExportBtn   = document.getElementById('exportButton');
+const elFwdBtn      = document.getElementById('bringForwardButton');
+const elBkBtn       = document.getElementById('sendBackwardButton');
+const elFrontBtn    = document.getElementById('bringFrontButton');
+const elBackBtn     = document.getElementById('sendBackButton');
+const elFillToggle  = document.getElementById('fillToggle');
+const elFitBtn      = document.getElementById('fitView');
+const elGridToggle  = document.getElementById('gridToggle');
+const elSnapToggle  = document.getElementById('snapToggle');
+const elGridLabel   = document.getElementById('gridLabel');
+const elSnapLabel   = document.getElementById('snapLabel');
+const elResetView   = document.getElementById('resetView');
+const toolBtns      = document.querySelectorAll('[data-tool]');
 
-    /* ════════════════════════════════════════════════
-       STATE
-    ════════════════════════════════════════════════ */
-    let activeTool   = 'select';
-    let eraserSize   = 32;
-    let isErasing    = false;
-    let isDrawing    = false;
-    let isPanning    = false;
-    let startPoint   = null;
-    let currentShape = null;
-    let dirty        = false;
-    let saving       = false;
-    let fillShapes   = false;
-    let gridVisible  = false;
-    let snapEnabled  = false;
-    let lastSavedAt  = null;
-    let suppressHistory = false;
-    let textEditor   = null;
-    let clipboard    = null;
-    const history    = [];
-    const redoHistory = [];
-    const maxHistory = 60;
-    const gridSize   = 40;
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   STATE
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+let activeTool   = 'select';
+let eraserSize   = 32;
+let isDrawing    = false;
+let isPanning    = false;
+let isErasing    = false;
+let startPt      = null;
+let curShape     = null;
+let dirty        = false;
+let saving       = false;
+let fillShapes   = false;
+let gridVisible  = false;
+let snapEnabled  = false;
+let lastSaveTime = null;
+let noHistory    = false;   // suppress during undo/redo restores
+let textEl       = null;    // active textarea overlay
+let clipboard    = null;
+const history    = [];
+const future     = [];
+const HISTORY_MAX= 60;
+const GRID_SIZE  = 40;
 
-    /* ════════════════════════════════════════════════
-       STATUS
-    ════════════════════════════════════════════════ */
-    function setStatus(message, state = 'saved') {
-        statusLabel.textContent   = message;
-        statusLabel.dataset.state = state;
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   STATUS HELPERS
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function setStatus(msg, state = 'saved') {
+    elStatus.textContent   = msg;
+    elStatus.dataset.state = state;
+}
+function tickAge() {
+    if (dirty || saving || !lastSaveTime || elStatus.dataset.state !== 'saved') return;
+    const s = Math.floor((Date.now() - lastSaveTime) / 1000);
+    if (s < 5)  return setStatus('Saved just now', 'saved');
+    if (s < 60) return setStatus(`Saved ${s}s ago`, 'saved');
+    setStatus(`Saved ${Math.floor(s/60)}m ago`, 'saved');
+}
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   STAGE SETUP
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function makeStage() {
+    return new Konva.Stage({ container:'container', width:innerWidth, height:innerHeight });
+}
+
+let stage = makeStage();
+if (savedData) {
+    try {
+        stage.destroy();
+        stage = Konva.Node.create(JSON.parse(savedData), 'container');
+        stage.width(innerWidth);
+        stage.height(innerHeight);
+    } catch(e) {
+        console.error('Load error:', e);
+        stage = makeStage();
+        setStatus('Could not load board data.', 'error');
     }
+}
 
-    function updateSavedAge() {
-        if (dirty || saving || !lastSavedAt || statusLabel.dataset.state !== 'saved') return;
-        const s = Math.max(0, Math.floor((Date.now() - lastSavedAt) / 1000));
-        if (s < 5)  return setStatus('Saved just now', 'saved');
-        if (s < 60) return setStatus(`Saved ${s}s ago`, 'saved');
-        setStatus(`Saved ${Math.floor(s/60)}m ago`, 'saved');
-    }
+// Find or create the draw layer
+let layer = stage.findOne('.drawLayer');
+if (!layer) {
+    layer = stage.findOne('Layer') || new Konva.Layer({ name:'drawLayer' });
+    layer.name('drawLayer');
+    if (!layer.getStage()) stage.add(layer);
+}
 
-    /* ════════════════════════════════════════════════
-       STAGE
-    ════════════════════════════════════════════════ */
-    function makeStage() {
-        return new Konva.Stage({
-            container: 'container',
-            width: window.innerWidth, height: window.innerHeight,
-            x: 0, y: 0, scaleX: 1, scaleY: 1,
-        });
-    }
-
-    let stage = makeStage();
-    if (savedData) {
-        try {
-            stage.destroy();
-            stage = Konva.Node.create(JSON.parse(savedData), 'container');
-            stage.width(window.innerWidth);
-            stage.height(window.innerHeight);
-        } catch (err) {
-            console.error(err);
-            stage = makeStage();
-            setStatus('Could not load board data.', 'error');
-        }
-    }
-
-    let layer = stage.findOne('.drawLayer');
-    if (!layer) {
-        layer = stage.findOne('Layer') || new Konva.Layer({ name: 'drawLayer' });
-        layer.name('drawLayer');
-        if (!layer.getStage()) stage.add(layer);
-    }
-
-    /* ── Background ── */
-    function ensureBackground() {
-        let bg = layer.findOne('.background');
-        if (!bg) {
-            bg = new Konva.Rect({
-                name: 'background', x: -100000, y: -100000,
-                width: 200000, height: 200000, fill: '#ffffff', listening: true,
-            });
-            layer.add(bg);
-            bg.moveToBottom();
-        }
-        return bg;
-    }
-
-    const background = ensureBackground();
-
-    /* ── Grid ── */
-    const gridGroup = ensureGrid();
-    function ensureGrid() {
-        let g = layer.findOne('.gridGroup');
-        if (!g) {
-            g = new Konva.Group({ name: 'gridGroup', listening: false, visible: false });
-            for (let v = -4000; v <= 4000; v += gridSize) {
-                g.add(new Konva.Line({ name:'gridNode', points:[v,-4000,v,4000], stroke:'#dde4ef', strokeWidth: v===0?1.5:.6, listening:false }));
-                g.add(new Konva.Line({ name:'gridNode', points:[-4000,v,4000,v], stroke:'#dde4ef', strokeWidth: v===0?1.5:.6, listening:false }));
-            }
-            layer.add(g);
-            g.moveToBottom();
-            background.moveToBottom();
-        }
-        return g;
-    }
-
-    /* ── Transformer ── */
-    const transformer = new Konva.Transformer({
-        name: 'selectionTransformer',
-        rotateEnabled: true, ignoreStroke: true,
-        borderStroke: '#2563eb', borderStrokeWidth: 1.5,
-        anchorStroke: '#2563eb', anchorFill: '#fff', anchorSize: 9, anchorCornerRadius: 3,
-        boundBoxFunc: (oldBox, newBox) => (newBox.width < 8 || newBox.height < 8) ? oldBox : newBox,
+// â”€â”€ White background rect (fills infinite canvas)
+let bgRect = layer.findOne('.background');
+if (!bgRect) {
+    bgRect = new Konva.Rect({
+        name:'background',
+        x:-100000, y:-100000,
+        width:200000, height:200000,
+        fill:'#ffffff', listening:true,
     });
-    layer.add(transformer);
+    layer.add(bgRect);
+    bgRect.moveToBottom();
+}
+
+// â”€â”€ Grid group
+let gridGroup = layer.findOne('.gridGroup');
+if (!gridGroup) {
+    gridGroup = new Konva.Group({ name:'gridGroup', listening:false, visible:false });
+    for (let v = -4000; v <= 4000; v += GRID_SIZE) {
+        gridGroup.add(new Konva.Line({ name:'gridNode', points:[v,-4000,v,4000],   stroke:'#dde4ef', strokeWidth: v===0 ? 1.5 : 0.6, listening:false }));
+        gridGroup.add(new Konva.Line({ name:'gridNode', points:[-4000,v,4000,v],   stroke:'#dde4ef', strokeWidth: v===0 ? 1.5 : 0.6, listening:false }));
+    }
+    layer.add(gridGroup);
+    gridGroup.moveToBottom();
+    bgRect.moveToBottom();
+}
+
+// â”€â”€ Transformer
+const tr = new Konva.Transformer({
+    name: 'selectionTransformer',
+    rotateEnabled: true, ignoreStroke: true,
+    borderStroke:'#2563eb', borderStrokeWidth:1.5,
+    anchorStroke:'#2563eb', anchorFill:'#fff', anchorSize:9, anchorCornerRadius:3,
+    boundBoxFunc:(o,n) => (n.width<8||n.height<8) ? o : n,
+});
+layer.add(tr);
+layer.draw();
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   HISTORY
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function snapshot() {
+    return JSON.stringify(drawableNodes().map(n => n.toJSON()));
+}
+
+function pushHistory() {
+    if (noHistory) return;
+    const snap = snapshot();
+    if (history.length && history[history.length-1] === snap) return;
+    history.push(snap);
+    if (history.length > HISTORY_MAX) history.shift();
+    future.length = 0;
+    refreshHistoryBtns();
+}
+
+function applySnapshot(snap) {
+    noHistory = true;
+    tr.nodes([]);
+    drawableNodes().forEach(n => n.destroy());
+    JSON.parse(snap).forEach(json => {
+        const node = Konva.Node.create(JSON.parse(json));
+        layer.add(node);
+        wireShape(node);
+    });
+    bgRect.moveToBottom();
+    gridGroup.moveToBottom();
+    bgRect.moveToBottom();
+    tr.moveToTop();
     layer.draw();
+    noHistory = false;
+    markDirty();
+    refreshSelBtns();
+}
 
-    /* ════════════════════════════════════════════════
-       HISTORY
-    ════════════════════════════════════════════════ */
-    function drawableSnapshot() {
-        return JSON.stringify(selectableNodes().map(n => n.toJSON()));
+function undo() {
+    if (history.length <= 1) return;
+    future.push(history.pop());
+    applySnapshot(history[history.length-1]);
+    refreshHistoryBtns();
+}
+function redo() {
+    if (!future.length) return;
+    const snap = future.pop();
+    history.push(snap);
+    applySnapshot(snap);
+    refreshHistoryBtns();
+}
+function refreshHistoryBtns() {
+    elUndoBtn.disabled = history.length <= 1;
+    elRedoBtn.disabled = future.length === 0;
+}
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   DIRTY / MARK
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function markDirty() {
+    dirty = true;
+    if (!saving) setStatus('Unsaved', 'dirty');
+}
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   DRAWABLE NODES
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function drawableNodes() {
+    return layer.children.filter(n =>
+        !n.hasName('background') &&
+        !n.hasName('selectionTransformer') &&
+        !n.hasName('gridGroup') &&
+        !n.hasName('gridNode')
+    );
+}
+
+function isOnBackground(target) {
+    return !target ||
+           target === stage ||
+           target === bgRect ||
+           target.hasName?.('background') ||
+           target.hasName?.('gridGroup') ||
+           target.hasName?.('gridNode');
+}
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   SELECTION
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function selectNode(node, append = false) {
+    if (!node || isOnBackground(node)) {
+        tr.nodes([]);
+    } else if (append) {
+        const cur = tr.nodes();
+        tr.nodes(cur.includes(node) ? cur.filter(x=>x!==node) : [...cur, node]);
+    } else {
+        tr.nodes([node]);
     }
+    syncStyleFromSel();
+    refreshSelBtns();
+    layer.draw();
+}
 
-    function restoreDrawableSnapshot(snapshot) {
-        suppressHistory = true;
-        transformer.nodes([]);
-        selectableNodes().forEach(n => n.destroy());
-        JSON.parse(snapshot).forEach(nodeJson => {
-            const node = Konva.Node.create(JSON.parse(nodeJson));
-            layer.add(node);
-            enableShape(node);
-        });
-        background.moveToBottom();
-        gridGroup.moveToBottom();
-        background.moveToBottom();
-        transformer.moveToTop();
-        layer.draw();
-        suppressHistory = false;
-        updateSelectionControls();
-        markDirty();
+function refreshSelBtns() {
+    const has = tr.nodes().length > 0;
+    [elDupeBtn, elFwdBtn, elBkBtn, elFrontBtn, elBackBtn].forEach(b => { b.disabled = !has; });
+}
+
+function syncStyleFromSel() {
+    const sel = tr.nodes()[0];
+    if (!sel) return;
+    // Sync color
+    const color = (sel.getClassName()==='Text') ? sel.fill() : (sel.stroke?.() || sel.fill?.());
+    if (color && /^#[0-9a-f]{6}$/i.test(color)) {
+        elColorPicker.value = color;
+        highlightSwatch(color);
     }
-
-    function pushHistory() {
-        if (suppressHistory) return;
-        const snap = drawableSnapshot();
-        if (history[history.length - 1] === snap) return;
-        history.push(snap);
-        if (history.length > maxHistory) history.shift();
-        redoHistory.length = 0;
-        updateHistoryControls();
+    // Sync stroke width
+    const sw = sel.strokeWidth?.();
+    if (sw) {
+        elStrokeWidth.value = String(sw);
+        highlightStrokeBtn(String(sw));
     }
+}
 
-    function undo() {
-        if (history.length <= 1) return;
-        redoHistory.push(history.pop());
-        restoreDrawableSnapshot(history[history.length - 1]);
-        updateHistoryControls();
-    }
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   CURSOR
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function setCursor(cursor) {
+    stage.container().style.cursor = cursor;
+}
 
-    function redo() {
-        if (!redoHistory.length) return;
-        const snap = redoHistory.pop();
-        history.push(snap);
-        restoreDrawableSnapshot(snap);
-        updateHistoryControls();
-    }
-
-    function updateHistoryControls() {
-        undoButton.disabled = history.length <= 1;
-        redoButton.disabled = redoHistory.length === 0;
-    }
-
-    /* ════════════════════════════════════════════════
-       DIRTY / SAVE
-    ════════════════════════════════════════════════ */
-    function markDirty() {
-        dirty = true;
-        if (!saving) setStatus('Unsaved', 'dirty');
-    }
-
-    /* ════════════════════════════════════════════════
-       TOOLS & NODES
-    ════════════════════════════════════════════════ */
-    function setTool(tool) {
-        activeTool = tool;
-        transformer.nodes([]);
-        toolButtons.forEach(b => b.classList.toggle('active', b.dataset.tool === tool));
-        // Eraser size selector visibility
-        eraserSizeSelect.style.display = tool === 'eraser' ? '' : 'none';
-        updateCursor();
-        layer.draw();
-    }
-
-    toolButtons.forEach(b => b.addEventListener('click', () => setTool(b.dataset.tool)));
-
-    function pointerPosition() {
-        const p = stage.getPointerPosition();
-        if (!p) return { x:0, y:0 };
-        return stage.getAbsoluteTransform().copy().invert().point(p);
-    }
-
-    function snapValue(v) { return snapEnabled ? Math.round(v / gridSize) * gridSize : v; }
-    function snapPoint(p) { return { x: snapValue(p.x), y: snapValue(p.y) }; }
-
-    function currentStyle() {
-        return {
-            stroke: colorPicker.value,
-            fill: fillShapes ? colorPicker.value : transparentFill(colorPicker.value),
-            strokeWidth: Number(strokeWidth.value),
-        };
-    }
-
-    function isBackground(t) {
-        return t === stage || t === background || t.hasName?.('background');
-    }
-
-    function selectableNodes() {
-        return layer.children.filter(n =>
-            !n.hasName('background') &&
-            !n.hasName('selectionTransformer') &&
-            !n.hasName('gridGroup') &&
-            !n.hasName('gridNode')
-        );
-    }
-
-    function selectNode(node, append = false) {
-        if (!node || isBackground(node)) {
-            transformer.nodes([]);
-        } else if (append) {
-            const nodes = transformer.nodes();
-            const exists = nodes.includes(node);
-            transformer.nodes(exists ? nodes.filter(x => x !== node) : [...nodes, node]);
-        } else {
-            transformer.nodes([node]);
-        }
-        syncStyleFromSelection();
-        updateSelectionControls();
-        layer.draw();
-    }
-
-    function updateSelectionControls() {
-        const has = transformer.nodes().length > 0;
-        [duplicateButton, bringForwardButton, sendBackwardButton, bringFrontButton, sendBackButton]
-            .forEach(b => { b.disabled = !has; });
-    }
-
-    function syncStyleFromSelection() {
-        const sel = transformer.nodes()[0];
-        if (!sel) return;
-        const stroke = sel.stroke?.() || sel.fill?.();
-        if (stroke && /^#[0-9a-f]{6}$/i.test(stroke)) {
-            colorPicker.value = stroke;
-            syncSwatches(stroke);
-        }
-        if (sel.strokeWidth?.()) {
-            strokeWidth.value = String(sel.strokeWidth());
-            syncStrokeBtns(String(sel.strokeWidth()));
-        }
-    }
-
-    /* ════════════════════════════════════════════════
-       CURSOR
-    ════════════════════════════════════════════════ */
-    function updateCursor(cursor = null) {
-        const c = stage.container();
-        if (activeTool === 'eraser') {
-            c.classList.add('cursor-eraser');
-            eraserCursor.style.display = 'block';
-            syncEraserBubble();
-            return;
-        }
-        c.classList.remove('cursor-eraser');
-        eraserCursor.style.display = 'none';
-        if (cursor)                       { c.style.cursor = cursor; return; }
-        if (activeTool === 'select')      { c.style.cursor = 'grab'; return; }
-        c.style.cursor = activeTool === 'text' ? 'text' : 'crosshair';
-    }
-
-    function syncEraserBubble() {
-        const d = eraserSize * stage.scaleX();
-        eraserCursor.style.width  = `${d}px`;
-        eraserCursor.style.height = `${d}px`;
-    }
-
-    document.addEventListener('mousemove', e => {
-        if (activeTool !== 'eraser') return;
-        eraserCursor.style.left = `${e.clientX}px`;
-        eraserCursor.style.top  = `${e.clientY}px`;
+function refreshCursor(override = null) {
+    const c = stage.container();
+    if (activeTool === 'eraser') {
+        c.classList.add('cursor-eraser');
+        elEraserCursor.style.display = 'block';
         syncEraserBubble();
-    });
-    document.addEventListener('mouseleave', () => { eraserCursor.style.display = 'none'; });
-    document.addEventListener('mouseenter', () => {
-        if (activeTool === 'eraser') eraserCursor.style.display = 'block';
-    });
-
-    /* ════════════════════════════════════════════════
-       SHAPES
-    ════════════════════════════════════════════════ */
-    function enableShape(node) {
-        // Guard: only attach listeners once per node
-        if (node._listenersAttached) {
-            node.draggable(activeTool === 'select');
-            return;
-        }
-        node._listenersAttached = true;
-        node.draggable(activeTool === 'select');
-        node.on('dragstart', () => { if (activeTool === 'select') selectNode(node); });
-        node.on('dragmove', () => {
-            if (!snapEnabled || node.getClassName() === 'Line' || node.getClassName() === 'Arrow') return;
-            node.position(snapPoint(node.position()));
-        });
-        node.on('dragend transformend', () => { markDirty(); pushHistory(); });
-        node.on('click tap', e => {
-            if (activeTool === 'eraser') {
-                // clicking a shape with eraser tool deletes it
-                e.cancelBubble = true;
-                node.destroy();
-                transformer.nodes([]);
-                markDirty();
-                pushHistory();
-                layer.draw();
-                return;
-            }
-            if (activeTool !== 'select') return;
-            e.cancelBubble = true;
-            selectNode(node, e.evt?.shiftKey);
-        });
-        if (node.getClassName() === 'Text') node.on('dblclick dbltap', () => editText(node));
+        return;
     }
+    c.classList.remove('cursor-eraser');
+    elEraserCursor.style.display = 'none';
+    if (override)               { c.style.cursor = override; return; }
+    if (activeTool === 'select'){ c.style.cursor = 'grab'; return; }
+    c.style.cursor = activeTool === 'text' ? 'text' : 'crosshair';
+}
 
-    selectableNodes().forEach(enableShape);
+function syncEraserBubble() {
+    const d = eraserSize * stage.scaleX();
+    elEraserCursor.style.width  = d + 'px';
+    elEraserCursor.style.height = d + 'px';
+}
 
-    function applyShapeDragState() {
-        selectableNodes().forEach(n => n.draggable(activeTool === 'select'));
-    }
+document.addEventListener('mousemove', e => {
+    if (activeTool !== 'eraser') return;
+    elEraserCursor.style.left = e.clientX + 'px';
+    elEraserCursor.style.top  = e.clientY + 'px';
+    syncEraserBubble();
+});
+document.addEventListener('mouseleave', () => { elEraserCursor.style.display = 'none'; });
+document.addEventListener('mouseenter', () => {
+    if (activeTool === 'eraser') elEraserCursor.style.display = 'block';
+});
 
-    /* ════════════════════════════════════════════════
-       ZOOM
-    ════════════════════════════════════════════════ */
-    function updateZoomLabel() {
-        zoomLabel.textContent = `${Math.round(stage.scaleX() * 100)}%`;
-    }
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   TOOL ACTIVATION
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function setTool(t) {
+    activeTool = t;
+    tr.nodes([]);
+    toolBtns.forEach(b => b.classList.toggle('active', b.dataset.tool === t));
+    elEraserSize.style.display = (t === 'eraser') ? '' : 'none';
+    // Show stroke/color controls only for drawing tools
+    refreshCursor();
+    layer.draw();
+}
 
-    function resetView() {
-        stage.position({ x:0, y:0 });
-        stage.scale({ x:1, y:1 });
-        updateZoomLabel();
-        stage.batchDraw();
-    }
+toolBtns.forEach(b => b.addEventListener('click', () => setTool(b.dataset.tool)));
 
-    stage.on('wheel', e => {
-        e.evt.preventDefault();
-        const old = stage.scaleX();
-        const ptr = stage.getPointerPosition();
-        const to  = { x:(ptr.x - stage.x())/old, y:(ptr.y - stage.y())/old };
-        const dir = e.evt.deltaY > 0 ? -1 : 1;
-        const next = Math.max(0.15, Math.min(5, old * (dir > 0 ? 1.08 : 1/1.08)));
-        stage.scale({ x:next, y:next });
-        stage.position({ x: ptr.x - to.x * next, y: ptr.y - to.y * next });
-        updateZoomLabel();
-        stage.batchDraw();
-    });
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   CANVAS COORDINATE HELPER
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function stagePoint() {
+    const p = stage.getPointerPosition();
+    if (!p) return { x:0, y:0 };
+    return stage.getAbsoluteTransform().copy().invert().point(p);
+}
 
-    /* ════════════════════════════════════════════════
-       ERASER
-    ════════════════════════════════════════════════ */
-    function eraseAtPoint(point) {
-        const r = eraserSize / 2;
-        // snapshot to avoid mutating the live array while iterating
-        const nodes = selectableNodes().slice();
-        let erased = false;
-        for (const node of nodes) {
-            if (node.hasName('selectionTransformer') || !node.getParent()) continue;
-            const rect = node.getClientRect({ relativeTo: layer });
-            if (point.x >= rect.x - r && point.x <= rect.x + rect.width  + r &&
-                point.y >= rect.y - r && point.y <= rect.y + rect.height + r) {
-                node.destroy();
-                erased = true;
-            }
-        }
-        if (erased) markDirty();
-        transformer.nodes([]);
-        layer.batchDraw();
-    }
+function maybeSnap(p) {
+    if (!snapEnabled) return p;
+    const s = GRID_SIZE;
+    return { x: Math.round(p.x/s)*s, y: Math.round(p.y/s)*s };
+}
 
-    /* ════════════════════════════════════════════════
-       POINTER EVENTS
-    ════════════════════════════════════════════════ */
-    stage.on('contentMousedown contentTouchstart', e => {
-        closeTextEditor();
-        const point = snapPoint(pointerPosition());
-        startPoint = point;
-        applyShapeDragState();
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   STYLE
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function getStyle() {
+    const stroke = elColorPicker.value;
+    const sw     = Number(elStrokeWidth.value);
+    const fill   = fillShapes ? stroke : hexAlpha(stroke, 0.14);
+    return { stroke, fill, strokeWidth: sw };
+}
 
+function hexAlpha(hex, a) {
+    const n = parseInt(hex.replace('#',''), 16);
+    return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;
+}
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   WIRE SHAPE (events on each drawn node)
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function wireShape(node) {
+    // Idempotent guard
+    if (node._wired) { node.draggable(activeTool === 'select'); return; }
+    node._wired = true;
+
+    node.draggable(activeTool === 'select');
+
+    node.on('mousedown touchstart', e => {
         if (activeTool === 'eraser') {
-            isErasing = true;
-            eraseAtPoint(point);
-            return;
-        }
-
-        if (activeTool === 'select') {
-            if (isBackground(e.target)) {
-                selectNode(null);
-                isPanning = true;
-                updateCursor('grabbing');
-                stage.draggable(true);
-                stage.startDrag();
-            }
-            return;
-        }
-
-        if (!isBackground(e.target)) return;
-
-        isDrawing = true;
-        const s = currentStyle();
-
-        if (activeTool === 'freehand') {
-            currentShape = new Konva.Line({
-                points: [point.x, point.y],
-                stroke: s.stroke, strokeWidth: s.strokeWidth,
-                lineCap: 'round', lineJoin: 'round', tension: 0.35, draggable: false,
-            });
-        }
-        if (activeTool === 'rect') {
-            currentShape = new Konva.Rect({
-                x: point.x, y: point.y, width:1, height:1,
-                stroke: s.stroke, strokeWidth: s.strokeWidth,
-                fill: s.fill, cornerRadius: 3, draggable: false,
-            });
-        }
-        if (activeTool === 'circle') {
-            currentShape = new Konva.Ellipse({
-                x: point.x, y: point.y, radiusX:1, radiusY:1,
-                stroke: s.stroke, strokeWidth: s.strokeWidth, fill: s.fill, draggable: false,
-            });
-        }
-        if (activeTool === 'line') {
-            currentShape = new Konva.Line({
-                points: [point.x, point.y, point.x, point.y],
-                stroke: s.stroke, strokeWidth: s.strokeWidth, lineCap: 'round', draggable: false,
-            });
-        }
-        if (activeTool === 'arrow') {
-            currentShape = new Konva.Arrow({
-                points: [point.x, point.y, point.x, point.y],
-                stroke: s.stroke, fill: s.stroke, strokeWidth: s.strokeWidth,
-                pointerLength:14, pointerWidth:14, lineCap:'round', draggable:false,
-            });
-        }
-        if (activeTool === 'text') {
-            currentShape = new Konva.Text({
-                x: point.x, y: point.y, text: 'Text', fill: s.stroke,
-                fontSize: 24, fontFamily: "'Inter', system-ui, sans-serif", draggable: false,
-            });
-            layer.add(currentShape);
-            enableShape(currentShape);
-            selectNode(currentShape);
-            editText(currentShape);
+            e.cancelBubble = true;
+            node.destroy();
+            tr.nodes([]);
             markDirty();
             pushHistory();
-            isDrawing = false;
-            currentShape = null;
-            return;
-        }
-
-        if (currentShape) { layer.add(currentShape); layer.draw(); }
-    });
-
-    stage.on('contentMousemove contentTouchmove', () => {
-        if (activeTool === 'eraser' && isErasing) { eraseAtPoint(pointerPosition()); return; }
-        if (!isDrawing || !currentShape) return;
-
-        const point = activeTool === 'freehand' ? pointerPosition() : snapPoint(pointerPosition());
-
-        if (activeTool === 'freehand') currentShape.points([...currentShape.points(), point.x, point.y]);
-        if (activeTool === 'rect') currentShape.setAttrs({
-            x: Math.min(startPoint.x, point.x), y: Math.min(startPoint.y, point.y),
-            width: Math.abs(point.x - startPoint.x), height: Math.abs(point.y - startPoint.y),
-        });
-        if (activeTool === 'circle') currentShape.setAttrs({
-            x: (startPoint.x + point.x)/2, y: (startPoint.y + point.y)/2,
-            radiusX: Math.abs(point.x - startPoint.x)/2,
-            radiusY: Math.abs(point.y - startPoint.y)/2,
-        });
-        if (activeTool === 'line' || activeTool === 'arrow')
-            currentShape.points([startPoint.x, startPoint.y, point.x, point.y]);
-
-        layer.batchDraw();
-    });
-
-    function finalizeDrawing() {
-        if (isErasing) {
-            isErasing = false;
-            pushHistory();
-            return;
-        }
-        if (isPanning) { isPanning = false; stage.draggable(false); updateCursor(); return; }
-        if (!isDrawing || !currentShape) return;
-
-        const shape = currentShape;
-        currentShape = null;
-        isDrawing = false;
-
-        if (shapeTooSmall(shape)) { shape.destroy(); layer.draw(); return; }
-
-        enableShape(shape);
-
-        // Shape tools: select the new shape and switch back to Select
-        // Freehand & text: stay on current tool so user can keep drawing
-        const stayOnTool = activeTool === 'freehand';
-        if (stayOnTool) {
-            // deselect but keep the tool active
-            transformer.nodes([]);
-            applyShapeDragState();
             layer.draw();
-        } else {
-            selectNode(shape);
-            setTool('select');
         }
-        markDirty();
-        pushHistory();
-    }
-
-    stage.on('contentMouseup contentTouchend', finalizeDrawing);
-    window.addEventListener('mouseup',   finalizeDrawing);
-    window.addEventListener('touchend',  finalizeDrawing);
-
-    /* ════════════════════════════════════════════════
-       KEYBOARD
-    ════════════════════════════════════════════════ */
-    document.addEventListener('keydown', e => {
-        if (textEditor) return;
-        const target = e.target;
-        if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT') return;
-        const key = e.key.toLowerCase();
-
-        if ((e.ctrlKey || e.metaKey) && key === 'z') { e.preventDefault(); undo(); return; }
-        if ((e.ctrlKey || e.metaKey) && (key === 'y' || (e.shiftKey && key === 'z'))) { e.preventDefault(); redo(); return; }
-        if ((e.ctrlKey || e.metaKey) && key === 's') { e.preventDefault(); saveBoard(false); return; }
-        if ((e.ctrlKey || e.metaKey) && key === 'c') { e.preventDefault(); copySelection(); return; }
-        if ((e.ctrlKey || e.metaKey) && key === 'v') { e.preventDefault(); pasteSelection(); return; }
-        if ((e.ctrlKey || e.metaKey) && key === 'd') { e.preventDefault(); duplicateSelection(); return; }
-
-        const shortcuts = { v:'select', p:'freehand', r:'rect', c:'circle', l:'line', a:'arrow', t:'text' };
-        if (!e.ctrlKey && !e.metaKey && shortcuts[key]) { setTool(shortcuts[key]); return; }
-        if (!e.ctrlKey && !e.metaKey && key === 'e') { setTool(activeTool === 'eraser' ? 'select' : 'eraser'); return; }
-        if (key === 'f') { fitToContent(); return; }
-        if (key === 'escape') { setTool('select'); return; }
-        if (key === 'home') { resetView(); return; }
-
-        if (e.key !== 'Delete' && e.key !== 'Backspace') return;
-        const selected = transformer.nodes();
-        if (!selected.length) return;
-        e.preventDefault();
-        selected.forEach(n => n.destroy());
-        transformer.nodes([]);
-        markDirty();
-        pushHistory();
-        layer.draw();
-        updateSelectionControls();
     });
 
-    /* ════════════════════════════════════════════════
-       COLOUR SWATCHES & STROKE BUTTONS
-    ════════════════════════════════════════════════ */
-    function syncSwatches(color) {
-        document.querySelectorAll('.swatch').forEach(s =>
-            s.classList.toggle('on', s.dataset.color.toLowerCase() === color.toLowerCase())
-        );
-    }
-
-    document.querySelectorAll('.swatch').forEach(s => s.addEventListener('click', () => {
-        colorPicker.value = s.dataset.color;
-        syncSwatches(s.dataset.color);
-        applyStyleToSelection();
-    }));
-
-    // Clicking the colour-wheel triggers the hidden native picker
-    document.querySelector('.color-wheel').addEventListener('click', e => {
-        // the input itself handles the picker; just prevent double-fire
+    node.on('dragstart', () => {
+        if (activeTool === 'select') selectNode(node);
     });
-    colorPicker.addEventListener('input', e => {
-        syncSwatches(e.target.value);
-        applyStyleToSelection();
-    });
-
-    function syncStrokeBtns(w) {
-        document.querySelectorAll('.stroke-btn').forEach(b =>
-            b.classList.toggle('on', b.dataset.w === w)
-        );
-    }
-
-    document.querySelectorAll('.stroke-btn').forEach(b => b.addEventListener('click', () => {
-        strokeWidth.value = b.dataset.w;
-        syncStrokeBtns(b.dataset.w);
-        applyStyleToSelection();
-    }));
-
-    strokeWidth.addEventListener('change', applyStyleToSelection);
-
-    function applyStyleToSelection() {
-        const nodes = transformer.nodes();
-        if (!nodes.length) return;
-        const s = currentStyle();
-        nodes.forEach(node => {
-            if (node.stroke && node.getClassName() !== 'Text') {
-                node.stroke(s.stroke);
-                node.strokeWidth(s.strokeWidth);
+    node.on('dragmove', () => {
+        if (snapEnabled) {
+            const cls = node.getClassName();
+            if (cls !== 'Line' && cls !== 'Arrow') {
+                node.position(maybeSnap(node.position()));
             }
-            if (node.getClassName() === 'Rect' || node.getClassName() === 'Ellipse') node.fill(s.fill);
-            if (node.getClassName() === 'Text')  node.fill(s.stroke);
-            if (node.getClassName() === 'Arrow') node.fill(s.stroke);
-        });
-        markDirty();
-        pushHistory();
-        layer.batchDraw();
-    }
-
-    /* ════════════════════════════════════════════════
-       CLIPBOARD & SELECTION OPERATIONS
-    ════════════════════════════════════════════════ */
-    function duplicateSelection() {
-        const clones = transformer.nodes().map(node => {
-            const clone = node.clone({ x: node.x()+24, y: node.y()+24 });
-            layer.add(clone); enableShape(clone);
-            return clone;
-        });
-        if (!clones.length) return;
-        transformer.nodes(clones); transformer.moveToTop();
-        markDirty(); pushHistory(); updateSelectionControls(); layer.draw();
-    }
-
-    function copySelection() {
-        const nodes = transformer.nodes();
-        if (!nodes.length) return;
-        clipboard = nodes.map(n => n.toJSON());
-    }
-
-    function pasteSelection() {
-        if (!clipboard?.length) return;
-        const clones = clipboard.map(json => {
-            const node = Konva.Node.create(JSON.parse(json));
-            node.position({ x: node.x()+28, y: node.y()+28 });
-            layer.add(node); enableShape(node);
-            return node;
-        });
-        clipboard = clones.map(n => n.toJSON());
-        transformer.nodes(clones); transformer.moveToTop();
-        markDirty(); pushHistory(); updateSelectionControls(); layer.draw();
-    }
-
-    function moveSelection(dir) {
-        const nodes = transformer.nodes();
-        if (!nodes.length) return;
-        nodes.forEach(node => {
-            if (dir === 'up')     node.moveUp();
-            if (dir === 'down')   { node.moveDown(); background.moveToBottom(); gridGroup.moveToBottom(); background.moveToBottom(); }
-            if (dir === 'top')    node.moveToTop();
-            if (dir === 'bottom') { node.moveToBottom(); background.moveToBottom(); gridGroup.moveToBottom(); background.moveToBottom(); }
-        });
-        transformer.moveToTop();
-        markDirty(); pushHistory(); layer.draw();
-    }
-
-    function fitToContent() {
-        const nodes = selectableNodes();
-        if (!nodes.length) { resetView(); return; }
-        const box = nodes.reduce((b, node) => {
-            const r = node.getClientRect({ relativeTo: layer });
-            return { x: Math.min(b.x,r.x), y: Math.min(b.y,r.y), right: Math.max(b.right,r.x+r.width), bottom: Math.max(b.bottom,r.y+r.height) };
-        }, { x:Infinity, y:Infinity, right:-Infinity, bottom:-Infinity });
-        const pad=120, w=Math.max(1,box.right-box.x), h=Math.max(1,box.bottom-box.y);
-        const scale = Math.max(0.15, Math.min(5, Math.min((stage.width()-pad)/w, (stage.height()-pad)/h)));
-        stage.scale({ x:scale, y:scale });
-        stage.position({ x: stage.width()/2 - (box.x+w/2)*scale, y: stage.height()/2 - (box.y+h/2)*scale });
-        updateZoomLabel(); stage.batchDraw();
-    }
-
-    function exportPng() {
-        const selected = transformer.nodes();
-        transformer.nodes([]); layer.draw();
-        const uri = stage.toDataURL({ pixelRatio:2 });
-        transformer.nodes(selected); layer.draw();
-        const a = document.createElement('a');
-        a.download = `${(boardName.value.trim() || 'whiteboard').replace(/[^a-z0-9-_]+/gi,'-')}.png`;
-        a.href = uri;
-        document.body.appendChild(a); a.click(); a.remove();
-    }
-
-    /* ════════════════════════════════════════════════
-       EVENT LISTENERS — CONTROLS
-    ════════════════════════════════════════════════ */
-    boardName.addEventListener('input', markDirty);
-    document.getElementById('resetView').addEventListener('click', resetView);
-    saveButton.addEventListener('click', () => saveBoard(false));
-
-    // Keep stroke-btn visual state in sync whenever the hidden select changes
-    strokeWidth.addEventListener('change', () => syncStrokeBtns(strokeWidth.value));
-    undoButton.addEventListener('click', undo);
-    redoButton.addEventListener('click', redo);
-    duplicateButton.addEventListener('click', duplicateSelection);
-    exportButton.addEventListener('click', exportPng);
-    fitViewButton.addEventListener('click', fitToContent);
-    bringForwardButton.addEventListener('click',  () => moveSelection('up'));
-    sendBackwardButton.addEventListener('click',  () => moveSelection('down'));
-    bringFrontButton.addEventListener('click',    () => moveSelection('top'));
-    sendBackButton.addEventListener('click',      () => moveSelection('bottom'));
-
-    fillToggle.addEventListener('click', () => {
-        fillShapes = !fillShapes;
-        fillToggle.innerHTML = fillShapes
-            ? `<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> Fill On`
-            : `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> Fill Off`;
-        fillToggle.classList.toggle('on', fillShapes);
-        applyStyleToSelection();
+        }
     });
-
-    gridToggle.addEventListener('change', () => {
-        gridVisible = gridToggle.checked;
-        gridGroup.visible(gridVisible);
-        gridLabel.classList.toggle('on', gridVisible);
-        layer.batchDraw();
+    node.on('dragend transformend', () => { markDirty(); pushHistory(); });
+    node.on('click tap', e => {
+        if (activeTool !== 'select') return;
+        e.cancelBubble = true;
+        selectNode(node, e.evt?.shiftKey);
     });
-
-    snapToggle.addEventListener('change', () => {
-        snapEnabled = snapToggle.checked;
-        snapLabel.classList.toggle('on', snapEnabled);
-    });
-
-    eraserSizeSelect.addEventListener('change', () => {
-        eraserSize = Number(eraserSizeSelect.value);
-        syncEraserBubble();
-    });
-
-    /* ════════════════════════════════════════════════
-       HELPERS
-    ════════════════════════════════════════════════ */
-    function transparentFill(hex) {
-        const v = hex.replace('#','');
-        const n = parseInt(v, 16);
-        return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},0.16)`;
+    if (node.getClassName() === 'Text') {
+        node.on('dblclick dbltap', () => openTextEditor(node));
     }
+}
 
-    function shapeTooSmall(shape) {
-        const cn = shape.getClassName();
-        if (cn === 'Line' || cn === 'Arrow') { const p=shape.points(); return Math.abs(p[0]-p[2])<3 && Math.abs(p[1]-p[3])<3; }
-        if (cn === 'Rect')    return shape.width()<3 || shape.height()<3;
-        if (cn === 'Ellipse') return shape.radiusX()<2 || shape.radiusY()<2;
-        return false;
-    }
+// Wire shapes loaded from saved data
+drawableNodes().forEach(wireShape);
 
-    function stageJson() {
-        transformer.nodes([]);
-        const clone = stage.clone();
-        clone.find('.selectionTransformer').forEach(n => n.destroy());
-        clone.find('.gridGroup').forEach(n => n.destroy());
-        clone.find('.gridNode').forEach(n => n.destroy());
-        clone.find('.background').forEach(n => n.destroy());
-        return clone.toJSON();
-    }
+function setAllDraggable() {
+    const sel = activeTool === 'select';
+    drawableNodes().forEach(n => n.draggable(sel));
+}
 
-    /* ════════════════════════════════════════════════
-       SAVE
-    ════════════════════════════════════════════════ */
-    async function saveBoard(auto = false) {
-        const name = boardName.value.trim();
-        if (!name) { setStatus('Board name is required.', 'error'); return; }
-        if (saving) return;
-        saving = true;
-        saveButton.disabled = true;
-        setStatus(auto ? 'Auto-saving…' : 'Saving…', 'saving');
-        const payload = { name, canvas_data: stageJson() };
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   ZOOM
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function refreshZoomLabel() {
+    elZoom.textContent = Math.round(stage.scaleX() * 100) + '%';
+}
 
-        try {
-            const res = await fetch(boardId ? `${apiBase}/${boardId}` : apiBase, {
-                method: boardId ? 'PUT' : 'POST',
-                headers: { 'Accept':'application/json', 'Content-Type':'application/json', 'X-CSRF-TOKEN':csrfToken },
-                body: JSON.stringify(payload),
-            });
-            const data = res.status === 204 ? {} : await res.json().catch(()=>({}));
-            if (!res.ok) throw new Error(data.message || Object.values(data.errors||{})[0]?.[0] || 'Save failed.');
-            boardId = data.id || boardId;
-            dirty = false;
-            lastSavedAt = Date.now();
-            setStatus(auto ? 'Auto-saved' : 'Saved just now', 'saved');
-            if (boardId && !window.location.pathname.endsWith(`/boards/${boardId}`))
-                window.history.replaceState({}, '', `/boards/${boardId}`);
-        } catch (err) {
-            console.error(err);
-            setStatus(err.message || 'Save failed', 'error');
-        } finally {
-            saving = false;
-            saveButton.disabled = false;
+function resetView() {
+    stage.position({x:0,y:0});
+    stage.scale({x:1,y:1});
+    refreshZoomLabel();
+    stage.batchDraw();
+}
+
+stage.on('wheel', e => {
+    e.evt.preventDefault();
+    const old = stage.scaleX();
+    const ptr = stage.getPointerPosition();
+    const to  = { x:(ptr.x - stage.x())/old, y:(ptr.y - stage.y())/old };
+    const dir = e.evt.deltaY > 0 ? -1 : 1;
+    const next = Math.max(0.1, Math.min(8, old * (dir > 0 ? 1.08 : 1/1.08)));
+    stage.scale({x:next,y:next});
+    stage.position({ x: ptr.x - to.x*next, y: ptr.y - to.y*next });
+    refreshZoomLabel();
+    stage.batchDraw();
+});
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   ERASER
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function eraseAt(pt) {
+    const r = eraserSize / 2;
+    const nodes = drawableNodes().slice(); // snapshot to avoid mutation
+    let erased = false;
+    for (const node of nodes) {
+        if (!node.getParent()) continue;
+        const rect = node.getClientRect({ relativeTo: layer });
+        if (pt.x >= rect.x - r && pt.x <= rect.x + rect.width  + r &&
+            pt.y >= rect.y - r && pt.y <= rect.y + rect.height + r) {
+            node.destroy();
+            erased = true;
         }
     }
+    if (erased) {
+        tr.nodes([]);
+        markDirty();
+        layer.batchDraw();
+    }
+}
 
-    /* ════════════════════════════════════════════════
-       TEXT EDITOR
-    ════════════════════════════════════════════════ */
-    function editText(textNode) {
-        closeTextEditor();
-        transformer.nodes([]);
-        textNode.hide();
-        layer.draw();
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   POINTER / DRAWING EVENTS
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+stage.on('mousedown touchstart', e => {
+    closeTextEditor();
+    const pt = maybeSnap(stagePoint());
+    startPt = pt;
+    setAllDraggable();
 
-        const pos  = textNode.absolutePosition();
-        const cRect = stage.container().getBoundingClientRect();
-
-        textEditor = document.createElement('textarea');
-        document.body.appendChild(textEditor);
-        textEditor.value = textNode.text();
-        Object.assign(textEditor.style, {
-            position: 'absolute',
-            top:        `${cRect.top  + pos.y}px`,
-            left:       `${cRect.left + pos.x}px`,
-            width:      `${Math.max(textNode.width(), 180)}px`,
-            minHeight:  '40px',
-            fontSize:   `${textNode.fontSize() * stage.scaleX()}px`,
-            fontFamily: textNode.fontFamily(),
-            color:      textNode.fill(),
-            border:     '2px solid #2563eb',
-            borderRadius:'8px',
-            padding:    '6px 10px',
-            background: '#fff',
-            zIndex:     '200',
-            outline:    'none',
-            resize:     'none',
-            lineHeight: '1.5',
-            boxShadow:  '0 4px 20px rgba(37,99,235,.22)',
-        });
-        textEditor.focus();
-        textEditor.select();
-
-        textEditor.addEventListener('keydown', e => {
-            if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); closeTextEditor(true); }
-            if (e.key === 'Escape') closeTextEditor(false);
-        });
-        textEditor.addEventListener('blur', () => closeTextEditor(true));
-        textEditor._node = textNode;
+    // â”€â”€ Eraser
+    if (activeTool === 'eraser') {
+        isErasing = true;
+        eraseAt(pt);
+        return;
     }
 
-    function closeTextEditor(commit = true) {
-        if (!textEditor) return;
-        const node = textEditor._node;
-        if (commit) { node.text(textEditor.value.trim() || 'Text'); markDirty(); pushHistory(); }
-        node.show();
-        textEditor.remove();
-        textEditor = null;
+    // â”€â”€ Select / Pan
+    if (activeTool === 'select') {
+        if (isOnBackground(e.target)) {
+            selectNode(null);
+            isPanning = true;
+            setCursor('grabbing');
+            stage.draggable(true);
+            stage.startDrag();
+        }
+        return;
+    }
+
+    // â”€â”€ Drawing tools â€” only start if clicking on background
+    if (!isOnBackground(e.target)) return;
+
+    isDrawing = true;
+    const s = getStyle();
+
+    if (activeTool === 'freehand') {
+        curShape = new Konva.Line({
+            points: [pt.x, pt.y, pt.x, pt.y],
+            stroke: s.stroke, strokeWidth: s.strokeWidth,
+            lineCap:'round', lineJoin:'round', tension:0.4,
+            draggable:false,
+        });
+    } else if (activeTool === 'rect') {
+        curShape = new Konva.Rect({
+            x:pt.x, y:pt.y, width:1, height:1,
+            stroke:s.stroke, strokeWidth:s.strokeWidth,
+            fill:s.fill, cornerRadius:3, draggable:false,
+        });
+    } else if (activeTool === 'circle') {
+        curShape = new Konva.Ellipse({
+            x:pt.x, y:pt.y, radiusX:1, radiusY:1,
+            stroke:s.stroke, strokeWidth:s.strokeWidth,
+            fill:s.fill, draggable:false,
+        });
+    } else if (activeTool === 'line') {
+        curShape = new Konva.Line({
+            points:[pt.x,pt.y,pt.x,pt.y],
+            stroke:s.stroke, strokeWidth:s.strokeWidth,
+            lineCap:'round', draggable:false,
+        });
+    } else if (activeTool === 'arrow') {
+        curShape = new Konva.Arrow({
+            points:[pt.x,pt.y,pt.x,pt.y],
+            stroke:s.stroke, fill:s.stroke, strokeWidth:s.strokeWidth,
+            pointerLength:12, pointerWidth:12, lineCap:'round', draggable:false,
+        });
+    } else if (activeTool === 'text') {
+        // Text: place immediately and open editor
+        const node = new Konva.Text({
+            x:pt.x, y:pt.y, text:'Text',
+            fill:s.stroke, fontSize:22,
+            fontFamily:"'Inter',system-ui,sans-serif", draggable:false,
+        });
+        layer.add(node);
+        wireShape(node);
         selectNode(node);
-        layer.draw();
+        openTextEditor(node);
+        markDirty();
+        pushHistory();
+        isDrawing = false;
+        return;
     }
 
-    /* ════════════════════════════════════════════════
-       RESIZE / INTERVALS
-    ════════════════════════════════════════════════ */
-    window.addEventListener('resize', () => {
-        stage.width(window.innerWidth);
-        stage.height(window.innerHeight);
-        stage.batchDraw();
-    });
+    if (curShape) {
+        layer.add(curShape);
+        layer.draw();
+    }
+});
 
-    setInterval(() => { if (dirty) saveBoard(true); }, 60000);
-    setInterval(updateSavedAge, 5000);
+stage.on('mousemove touchmove', () => {
+    if (isErasing) {
+        eraseAt(stagePoint());
+        return;
+    }
+    if (!isDrawing || !curShape) return;
 
-    /* ── Init ── */
-    updateZoomLabel();
-    setTool('select');
+    const pt = activeTool === 'freehand' ? stagePoint() : maybeSnap(stagePoint());
+
+    if (activeTool === 'freehand') {
+        curShape.points([...curShape.points(), pt.x, pt.y]);
+    } else if (activeTool === 'rect') {
+        curShape.setAttrs({
+            x: Math.min(startPt.x, pt.x),
+            y: Math.min(startPt.y, pt.y),
+            width:  Math.abs(pt.x - startPt.x),
+            height: Math.abs(pt.y - startPt.y),
+        });
+    } else if (activeTool === 'circle') {
+        curShape.setAttrs({
+            x: (startPt.x + pt.x) / 2,
+            y: (startPt.y + pt.y) / 2,
+            radiusX: Math.abs(pt.x - startPt.x) / 2,
+            radiusY: Math.abs(pt.y - startPt.y) / 2,
+        });
+    } else if (activeTool === 'line' || activeTool === 'arrow') {
+        curShape.points([startPt.x, startPt.y, pt.x, pt.y]);
+    }
+
+    layer.batchDraw();
+});
+
+function finalize() {
+    if (isErasing) {
+        isErasing = false;
+        pushHistory();
+        return;
+    }
+    if (isPanning) {
+        isPanning = false;
+        stage.draggable(false);
+        refreshCursor();
+        return;
+    }
+    if (!isDrawing || !curShape) return;
+
+    const shape = curShape;
+    curShape    = null;
+    isDrawing   = false;
+
+    // Discard shapes that are too small to be intentional
+    if (tooSmall(shape)) { shape.destroy(); layer.draw(); return; }
+
+    wireShape(shape);
+
+    if (activeTool === 'freehand') {
+        // Stay on freehand so user can keep drawing
+        tr.nodes([]);
+        setAllDraggable();
+        layer.draw();
+    } else {
+        selectNode(shape);
+        setTool('select');
+    }
+    markDirty();
     pushHistory();
-    updateSelectionControls();
+}
+
+// Use window events only — they fire for every release regardless of where the pointer lifts
+window.addEventListener('mouseup',  finalize);
+window.addEventListener('touchend', finalize);
+
+function tooSmall(shape) {
+    const cn = shape.getClassName();
+    if (cn === 'Line') {
+        const p = shape.points();
+        // Freehand lines accumulate many points; only discard if the mouse never moved
+        // (points stays at the initial [x,y,x,y] = 4 values, both identical)
+        if (p.length > 4) return false;   // has real movement — always keep
+        return Math.abs(p[0]-p[2]) < 4 && Math.abs(p[1]-p[3]) < 4;
+    }
+    if (cn === 'Arrow') {
+        const p = shape.points();
+        return Math.abs(p[0]-p[2]) < 4 && Math.abs(p[1]-p[3]) < 4;
+    }
+    if (cn === 'Rect')    return shape.width()   < 4 || shape.height()   < 4;
+    if (cn === 'Ellipse') return shape.radiusX() < 2 || shape.radiusY() < 2;
+    return false;
+}
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   KEYBOARD
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+document.addEventListener('keydown', e => {
+    if (textEl) return;   // ignore when typing in textarea
+    const tg = e.target;
+    if (tg.tagName === 'INPUT' || tg.tagName === 'TEXTAREA' || tg.tagName === 'SELECT') return;
+    const k = e.key.toLowerCase();
+
+    if ((e.ctrlKey||e.metaKey) && k==='z')                          { e.preventDefault(); undo(); return; }
+    if ((e.ctrlKey||e.metaKey) && (k==='y'||(e.shiftKey&&k==='z'))){ e.preventDefault(); redo(); return; }
+    if ((e.ctrlKey||e.metaKey) && k==='s')                          { e.preventDefault(); saveBoard(false); return; }
+    if ((e.ctrlKey||e.metaKey) && k==='c')                          { e.preventDefault(); copySelected(); return; }
+    if ((e.ctrlKey||e.metaKey) && k==='v')                          { e.preventDefault(); pasteClipboard(); return; }
+    if ((e.ctrlKey||e.metaKey) && k==='d')                          { e.preventDefault(); duplicateSelected(); return; }
+
+    const shortcuts = { v:'select', p:'freehand', r:'rect', c:'circle', l:'line', a:'arrow', t:'text' };
+    if (!e.ctrlKey && !e.metaKey && shortcuts[k]) { setTool(shortcuts[k]); return; }
+    if (!e.ctrlKey && !e.metaKey && k==='e') { setTool(activeTool==='eraser' ? 'select' : 'eraser'); return; }
+    if (k==='f')      { fitToContent(); return; }
+    if (k==='escape') { setTool('select'); return; }
+    if (k==='home')   { resetView(); return; }
+
+    if (e.key !== 'Delete' && e.key !== 'Backspace') return;
+    const sel = tr.nodes();
+    if (!sel.length) return;
+    e.preventDefault();
+    sel.forEach(n => n.destroy());
+    tr.nodes([]);
+    markDirty(); pushHistory(); layer.draw(); refreshSelBtns();
+});
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   COLOUR SWATCHES
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function highlightSwatch(color) {
+    document.querySelectorAll('.swatch').forEach(s =>
+        s.classList.toggle('on', s.dataset.color.toLowerCase() === color.toLowerCase())
+    );
+}
+
+document.querySelectorAll('.swatch').forEach(s => s.addEventListener('click', () => {
+    elColorPicker.value = s.dataset.color;
+    highlightSwatch(s.dataset.color);
+    applyStyle();
+}));
+
+// The native color input is overlaid on the .color-wheel div at opacity:0
+elColorPicker.addEventListener('input', e => {
+    highlightSwatch(e.target.value);
+    applyStyle();
+});
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   STROKE WIDTH BUTTONS
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function highlightStrokeBtn(w) {
+    document.querySelectorAll('.stroke-btn').forEach(b =>
+        b.classList.toggle('on', b.dataset.w === w)
+    );
+}
+
+document.querySelectorAll('.stroke-btn').forEach(b => b.addEventListener('click', () => {
+    elStrokeWidth.value = b.dataset.w;
+    highlightStrokeBtn(b.dataset.w);
+    applyStyle();
+}));
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   APPLY STYLE TO SELECTION
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function applyStyle() {
+    const nodes = tr.nodes();
+    if (!nodes.length) return;
+    const s = getStyle();
+    nodes.forEach(node => {
+        const cn = node.getClassName();
+        if (cn === 'Text') {
+            node.fill(s.stroke);
+        } else {
+            if (node.stroke) { node.stroke(s.stroke); node.strokeWidth(s.strokeWidth); }
+            if (cn === 'Rect' || cn === 'Ellipse') node.fill(s.fill);
+            if (cn === 'Arrow') node.fill(s.stroke);
+        }
+    });
+    markDirty(); pushHistory(); layer.batchDraw();
+}
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   SELECTION OPERATIONS
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function duplicateSelected() {
+    const clones = tr.nodes().map(node => {
+        const clone = node.clone({ x:node.x()+24, y:node.y()+24 });
+        layer.add(clone); wireShape(clone);
+        return clone;
+    });
+    if (!clones.length) return;
+    tr.nodes(clones); tr.moveToTop();
+    markDirty(); pushHistory(); refreshSelBtns(); layer.draw();
+}
+
+function copySelected() {
+    const nodes = tr.nodes();
+    if (!nodes.length) return;
+    clipboard = nodes.map(n => n.toJSON());
+}
+
+function pasteClipboard() {
+    if (!clipboard?.length) return;
+    const pasted = clipboard.map(json => {
+        const node = Konva.Node.create(JSON.parse(json));
+        node.position({ x:node.x()+28, y:node.y()+28 });
+        layer.add(node); wireShape(node);
+        return node;
+    });
+    clipboard = pasted.map(n => n.toJSON());
+    tr.nodes(pasted); tr.moveToTop();
+    markDirty(); pushHistory(); refreshSelBtns(); layer.draw();
+}
+
+function moveLayer(dir) {
+    tr.nodes().forEach(node => {
+        if (dir==='up')     { node.moveUp(); }
+        if (dir==='down')   { node.moveDown(); bgRect.moveToBottom(); gridGroup.moveToBottom(); bgRect.moveToBottom(); }
+        if (dir==='top')    { node.moveToTop(); }
+        if (dir==='bottom') { node.moveToBottom(); bgRect.moveToBottom(); gridGroup.moveToBottom(); bgRect.moveToBottom(); }
+    });
+    tr.moveToTop();
+    markDirty(); pushHistory(); layer.draw();
+}
+
+function fitToContent() {
+    const nodes = drawableNodes();
+    if (!nodes.length) { resetView(); return; }
+    const box = nodes.reduce((b,node) => {
+        const r = node.getClientRect({ relativeTo: layer });
+        return { x:Math.min(b.x,r.x), y:Math.min(b.y,r.y), right:Math.max(b.right,r.x+r.width), bottom:Math.max(b.bottom,r.y+r.height) };
+    }, {x:Infinity,y:Infinity,right:-Infinity,bottom:-Infinity});
+    const pad=100, w=Math.max(1,box.right-box.x), h=Math.max(1,box.bottom-box.y);
+    const scale = Math.max(0.1, Math.min(8, Math.min((stage.width()-pad)/w, (stage.height()-pad)/h)));
+    stage.scale({x:scale,y:scale});
+    stage.position({ x:stage.width()/2-(box.x+w/2)*scale, y:stage.height()/2-(box.y+h/2)*scale });
+    refreshZoomLabel(); stage.batchDraw();
+}
+
+function exportPng() {
+    const sel = tr.nodes();
+    tr.nodes([]); layer.draw();
+    const uri = stage.toDataURL({ pixelRatio:2 });
+    tr.nodes(sel); layer.draw();
+    const a = Object.assign(document.createElement('a'), {
+        download: (elBoardName.value.trim()||'whiteboard').replace(/[^a-z0-9_-]+/gi,'-') + '.png',
+        href: uri,
+    });
+    document.body.appendChild(a); a.click(); a.remove();
+}
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   FILL TOGGLE
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+elFillToggle.addEventListener('click', () => {
+    fillShapes = !fillShapes;
+    elFillToggle.innerHTML = fillShapes
+        ? `<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> Fill On`
+        : `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> Fill Off`;
+    elFillToggle.classList.toggle('on', fillShapes);
+    applyStyle();
+});
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   GRID & SNAP
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+elGridToggle.addEventListener('change', () => {
+    gridVisible = elGridToggle.checked;
+    gridGroup.visible(gridVisible);
+    elGridLabel.classList.toggle('on', gridVisible);
+    layer.batchDraw();
+});
+elSnapToggle.addEventListener('change', () => {
+    snapEnabled = elSnapToggle.checked;
+    elSnapLabel.classList.toggle('on', snapEnabled);
+});
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   CONTROL EVENT WIRING
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+elBoardName.addEventListener('input',  markDirty);
+elResetView.addEventListener('click',  resetView);
+elSaveBtn.addEventListener('click',    () => saveBoard(false));
+elUndoBtn.addEventListener('click',    undo);
+elRedoBtn.addEventListener('click',    redo);
+elDupeBtn.addEventListener('click',    duplicateSelected);
+elExportBtn.addEventListener('click',  exportPng);
+elFitBtn.addEventListener('click',     fitToContent);
+elFwdBtn.addEventListener('click',     () => moveLayer('up'));
+elBkBtn.addEventListener('click',      () => moveLayer('down'));
+elFrontBtn.addEventListener('click',   () => moveLayer('top'));
+elBackBtn.addEventListener('click',    () => moveLayer('bottom'));
+elEraserSize.addEventListener('change', () => {
+    eraserSize = Number(elEraserSize.value);
+    syncEraserBubble();
+});
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   SAVE
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function stageJson() {
+    tr.nodes([]);
+    const clone = stage.clone();
+    clone.find('.selectionTransformer').forEach(n => n.destroy());
+    clone.find('.gridGroup').forEach(n => n.destroy());
+    clone.find('.background').forEach(n => n.destroy());
+    return clone.toJSON();
+}
+
+async function saveBoard(auto = false) {
+    const name = elBoardName.value.trim();
+    if (!name) { setStatus('Board name is required.', 'error'); return; }
+    if (saving) return;
+    saving = true;
+    elSaveBtn.disabled = true;
+    setStatus(auto ? 'Auto-savingâ€¦' : 'Savingâ€¦', 'saving');
+    const payload = { name, canvas_data: stageJson() };
+    try {
+        const res  = await fetch(boardId ? `${API}/${boardId}` : API, {
+            method:  boardId ? 'PUT' : 'POST',
+            headers: { 'Accept':'application/json', 'Content-Type':'application/json', 'X-CSRF-TOKEN':CSRF },
+            body:    JSON.stringify(payload),
+        });
+        const data = res.status === 204 ? {} : await res.json().catch(()=>({}));
+        if (!res.ok) throw new Error(data.message || Object.values(data.errors||{})[0]?.[0] || 'Save failed.');
+        boardId = data.id || boardId;
+        dirty = false;
+        lastSaveTime = Date.now();
+        setStatus(auto ? 'Auto-saved' : 'Saved just now', 'saved');
+        if (boardId && !location.pathname.endsWith(`/boards/${boardId}`))
+            history.replaceState({}, '', `/boards/${boardId}`);
+    } catch(err) {
+        console.error(err);
+        setStatus(err.message || 'Save failed', 'error');
+    } finally {
+        saving = false;
+        elSaveBtn.disabled = false;
+    }
+}
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   TEXT EDITOR OVERLAY
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function openTextEditor(textNode) {
+    closeTextEditor();
+    tr.nodes([]);
+    textNode.hide();
+    layer.draw();
+
+    const pos   = textNode.absolutePosition();
+    const cRect = stage.container().getBoundingClientRect();
+    const scale = stage.scaleX();
+
+    textEl = document.createElement('textarea');
+    document.body.appendChild(textEl);
+    textEl.value = textNode.text();
+    Object.assign(textEl.style, {
+        position:   'fixed',
+        top:        (cRect.top  + pos.y) + 'px',
+        left:       (cRect.left + pos.x) + 'px',
+        width:      Math.max(textNode.width() * scale, 200) + 'px',
+        minHeight:  '40px',
+        fontSize:   (textNode.fontSize() * scale) + 'px',
+        fontFamily: textNode.fontFamily(),
+        color:      textNode.fill(),
+        border:     '2px solid #2563eb',
+        borderRadius: '8px',
+        padding:    '6px 10px',
+        background: '#fff',
+        zIndex:     '9999',
+        outline:    'none',
+        resize:     'none',
+        lineHeight: '1.5',
+        boxShadow:  '0 4px 20px rgba(37,99,235,.22)',
+    });
+    textEl.focus();
+    textEl.select();
+
+    textEl.addEventListener('keydown', e => {
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); closeTextEditor(true); }
+        if (e.key === 'Escape') closeTextEditor(false);
+    });
+    textEl.addEventListener('blur', () => closeTextEditor(true));
+    textEl._node = textNode;
+}
+
+function closeTextEditor(commit = true) {
+    if (!textEl) return;
+    const node = textEl._node;
+    if (commit) {
+        node.text(textEl.value.trim() || 'Text');
+        markDirty(); pushHistory();
+    }
+    node.show();
+    textEl.remove();
+    textEl = null;
+    selectNode(node);
+    layer.draw();
+}
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   RESIZE
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+window.addEventListener('resize', () => {
+    stage.width(innerWidth);
+    stage.height(innerHeight);
+    stage.batchDraw();
+});
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   AUTO-SAVE & TIMERS
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+setInterval(() => { if (dirty) saveBoard(true); }, 60_000);
+setInterval(tickAge, 5_000);
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   INIT
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+refreshZoomLabel();
+setTool('select');
+pushHistory();
+refreshSelBtns();
+refreshHistoryBtns();
 </script>
 </body>
 </html>
